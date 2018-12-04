@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Security System</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css" rel="stylesheet" type="text/css" />
+  <link rel="shortcut icon" href="./images/lock.ico" />
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script type="text/javascript">
+    var tries = 0;
+    var status = 0; //if 0 do nothing, else if 1 sound the alarm, else if 2 unlock system
+    function checkCombo(){
+      var bla = $('#comboBox').val();
+      if(bla.length > 0){
+        tries++;
+        if(bla == 16363){
+          $(".Status").text("Correct");
+          tries = 0;
+          status = 2;
+          $(".Status").text("Success, door has been opened");
+        }
+        else if(tries > 2){
+          tries = 0;
+          status = 1;
+          $(".Status").text("Alarm has been activated");
+        }
+        else if(bla.length < 5){
+          var triesLeft = 3 - tries;
+          var text = "Not enough numbers you have " + triesLeft + " tries left";
+          $(".Status").text(text);
+          status = 0;
+        }
+        else if(bla.length > 5){
+          var triesLeft = 3 - tries;
+          var text = "Too many numbers you have " + triesLeft + " tries left";
+          $(".Status").text(text);
+          status = 0;
+        }
+        else{
+          var triesLeft = 3 - tries;
+          var text = "Wrong value you have " + triesLeft + " tries left";
+          $(".Status").text(text);
+          status = 0;
+        }
+      }
+
+    }
+  </script>
+</head>
+<body>
+  <div class="content">
+    <nav style="background-color: darkblue;">
+      <div class="nav-wrapper">
+        <a href="#" class="brand-logo" style="margin-left:20px;">Security System</a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+          <li><a href="" style="margin-right:20px;">Home</a></li>
+        </ul>
+      </div>
+    </nav>
+    <section>
+      <br><br><br>
+      <h5 class="center-align">To deactivate security system, enter the correct combination</h5>
+      <br><br>
+      <div class="center-align">
+        <input id="comboBox" placeholder="Combination"type="number" class="validate" style = "width:25%;">
+        <br>
+        <a style="background-color:darkblue;"class="left-align waves-effect waves-light btn" onclick="checkCombo();">Check combination</a>
+        <br><br><br><br>
+        <div class="combination center-align">
+          <div class="Status"> Welcome</div>
+        </div>
+      </div>
+    </section>
+  </div>
+  <footer class="footer">
+    Security System Implementing the RPI and PIC18F26K22
+    <br>
+    Copyright 2018 <a href="https://www.github.com/lpierce1313">Luke Pierce</a> and <a href="https://www.linkedin.com/in/daniel-stehling-27bb78138"> Daniel Stehling</a>
+  </footer>
+</body>
+</html>
+
+<style media="screen">
+  html, body {
+  height: 100%;
+  }
+  body {
+  display: flex;
+  flex-direction: column;
+  }
+  .content {
+  flex: 1 0 auto;
+  }
+  .footer {
+  flex-shrink: 0;
+  background-color: lightgrey;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  text-align: center;
+  font-size: 18px;
+  }
+  .combination{
+    border: 1px solid black;
+    width: 50%;
+    margin:0 auto;
+  }
+  .Status{
+    font-size: 24px;
+    padding: 16px;
+  }
+</style>
